@@ -45,15 +45,16 @@ Therefore, no further processing is required since `readr::read_csv()` correctly
 ### Requirement 1
 > Make a histogram of the **total** number of steps taken each day
 
-Note that ggplot's `geom_bar()` is used here and not `geom_histogram()` since `geom_histogram()` only supports
-continuous data.  See [RStudio blog on ggplot](https://blog.rstudio.org/2015/12/21/ggplot2-2-0-0/).
+Note that we want a *histogram* not a bar chart.
 
+Create a data set with the total number of steps per day.
 ```{r warning=FALSE}
-ggplot(activity, aes(x = date, y = steps)) +
-    geom_bar(stat = "sum") +
-    theme(legend.position = "none") +                              # do not show histogram legend
-    labs(x = "Date of Measurement", y = "Total Number of Steps") + # set label text
-    ggtitle("Total Number of Steps per Day")                       # set title
+steps_per_day <- activity %>% group_by(date) %>% summarise(step_sum = sum(steps)) %>% select(step_sum)
+
+ggplot(steps_per_day, aes(x = step_sum)) +
+    geom_histogram() +
+    labs(x = "Count", y = "Total Steps") +      # set label text
+    ggtitle("Histogram of Total Steps per Day") # set title
 ```
 
 ### Requirement 2
@@ -237,12 +238,15 @@ kable(head(activity_filled), caption = "Original data set with missing data fill
 
 
 ```{r warning = FALSE}
-ggplot(activity_filled, aes(x = date, y = steps)) +
-    geom_bar(stat = "sum") +
-    theme(legend.position = "none") +                              # do not show histogram legend
-    labs(x = "Date of Measurement", y = "Total Number of Steps") + # set label text
-    ggtitle("Total Number of Steps per Day") #, "Filled in data")     # set title and sub-title
+steps_per_day <- activity_filled %>% group_by(date) %>% summarise(step_sum = sum(steps)) %>% select(step_sum)
+
+ggplot(steps_per_day, aes(x = step_sum)) +
+    geom_histogram() +
+    labs(x = "Count", y = "Total Steps") +      # set label text
+    ggtitle("Histogram of Total Steps per Day for Filled In Data") # set title
 ```
+
+The graph is noticably different between 7000 and 16000.
 
 ### Requirement 4b
 > Calculate and report the **mean** and **median** total number of steps taken per day.
