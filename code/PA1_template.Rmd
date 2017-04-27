@@ -22,12 +22,11 @@ Load required libraries
 library(readr)     # for reading in the zipped CSV data
 library(ggplot2)   # for plotting
 library(dplyr)     # for processing data (aggregating, filtering etc)
-library(tidyr)     # for tidying and shaping data
+library(tidyr)     # for tidying and shaping data (spread)
 library(knitr)     # for using kable to generate tables
 ```
 
 Load the zipped CSV data (using `readr::read_csv`) into a data set (`tibble`) called activity.
-
 ```{r}
 activity <- read_csv("activity.zip")
 ```
@@ -49,7 +48,8 @@ Therefore, no further processing is required since `readr::read_csv()` correctly
 ### Requirement 1
 > Make a histogram of the **total** number of steps taken each day
 
-Note that ggplot's `geom_bar()` is used here and not `geom_histogram()`.  See [RStudio blog on ggplot](https://blog.rstudio.org/2015/12/21/ggplot2-2-0-0/).
+Note that ggplot's `geom_bar()` is used here and not `geom_histogram()` since `geom_histogram()` only supports
+continuous data.  See [RStudio blog on ggplot](https://blog.rstudio.org/2015/12/21/ggplot2-2-0-0/).
 
 ```{r warning=FALSE}
 ggplot(activity, aes(x = date, y = steps)) +
@@ -82,7 +82,8 @@ kable(activity_by_day, caption = "Mean and median steps per day")
 
 
 ### Requirement 1
-> Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+> Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken,
+averaged across all days (y-axis)
 
 Create a data set containing the result of taking the mean and median aggregated by interval
 ```{r}
@@ -92,8 +93,8 @@ activity_by_interval <- activity %>%
 
 ggplot(activity_by_interval, aes(x = interval, y = step_mean) ) +
     geom_line() +
-    labs(x = "Measurement Interval (5 minute)", y = "Average Number of Steps") + # set label text
-    ggtitle("Average Number of Steps per 5 minute Interval")                    # set title
+    labs(x = "Measurement Interval (minute)", y = "Average Number of Steps") +   # set label text
+    ggtitle("Average Number of Steps per 5 minute Interval")                     # set title
 ```
 
 ### Requirement 2
@@ -106,7 +107,7 @@ activity_by_interval %>% arrange(desc(step_mean))
 
 Retrieve the maximum number of average steps from the data set and exract the interval only.
 ```{r}
-interval_max <- activity_by_interval[which.max(activity_by_interval$step_mean),]$interval
+(interval_max <- activity_by_interval[which.max(activity_by_interval$step_mean),]$interval)
 ```
 
 Therefore the interval is **`r interval_max`**
@@ -157,7 +158,8 @@ activity_na$date %>% weekdays()
 ```
 
 
-So, perhaps we can use the average of *equivalent* day intervals - so data missing for Monday is assigned the average of all the other Mondays.
+So, perhaps we can use the average of *equivalent* day intervals - data missing for Monday is assigned the average of
+all the other Mondays.
 
 
 Add a weekday to activity data set
@@ -165,7 +167,7 @@ Add a weekday to activity data set
 activity$weekday <- weekdays(activity$date)
 ```
 
-Create a data set `activity_weekday_mean` to hold the average steps per interval for each weekday.
+Create a data set `activity_weekday_mean` to hold the average steps per interval for each week day.
 Note that the days which have missing data are excluded in the mean() calculation
 ```{r}
 activity_weekday_mean <- activity %>%
@@ -177,24 +179,31 @@ activity_weekday_mean <- activity %>%
 kable(head(activity_weekday_mean), caption = "Average number of steps per weekday (first few rows)")
 ```
 
-This function will take a date for a day which is missing step data and return a data set containing the average steps per for each interval for the date's week day.
+Now create a function to fill in the missing dates based on their week day name (Monday in `activity` is filled in with `Monday` from `activity_weekday_mean`.
+
+This function will
+* take a date for a day which is missing step data and
+* return a data set containing the average steps for each interval for the date's week day.
+
 ```{r}
 fill_missing_values <- function(date_missing) {
 
-    # Create a temporary data frame for the date that is missing step data and
+    # Create a temporary data set for the date that is missing step data and
     # populate it by extracting the mean step values for the missing day
-    fill_df  <- cbind( date_missing, activity_weekday_mean[c( weekdays(date_missing), "interval" )] )
+    fill_df  <- cbind(date_missing,
+                      activity_weekday_mean[c( weekdays(date_missing), "interval" )])
 
-    # Assign proper column names to the data frame and select those columns in the correct order
+    # Assign proper column names to the temporary data set and...
     names(fill_df) <- c("date", "steps", "interval")
+
+    # ...select those columns in the correct order
     fill_df %>% select(steps, date, interval)
 }
 ```
 
 
-
 ### Requirement 3
-> Create new tibble with filled in values for NA days, rbind this with original data set (with stripped out NA days)
+> Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 New tibble with filled in values
 ```{r}
@@ -208,7 +217,6 @@ activity_na_rm <- activity %>% filter(!is.na(steps)) %>% select(-weekday)
 kable(head(activity_na_rm), caption = "Data set of activities without days which have missing dates (first few rows)")
 ```
 
-Create a new dataset that is equal to the original dataset but with the missing data filled in.
 This is the rbind of the data sets above, call arrange() to sort by date and interval as per the original data set
 ```{r}
 activity_filled <- rbind(activity_na_rm, activity_na_dates) %>% arrange(date, interval)
@@ -216,8 +224,8 @@ kable(head(activity_filled), caption = "Original data set with missing data fill
 ```
 
 
-### Requirement 4
-> Make a histogram of the total number of steps taken each day and
+### Requirement 4a
+> Make a histogram of the total number of steps taken each day
 
 
 ```{r warning = FALSE}
@@ -228,6 +236,7 @@ ggplot(activity_filled, aes(x = date, y = steps)) +
     ggtitle("Total Number of Steps per Day", "Filled in data")     # set title and sub-title
 ```
 
+### Requirement 4b
 > Calculate and report the **mean** and **median** total number of steps taken per day.
 
 ```{r}
@@ -243,7 +252,13 @@ kable(activity_filled_by_day, caption = "Filled in Mean and median steps per day
 ```
 
 > Do these values differ from the estimates from the first part of the assignment?
-Yes, we now have non-zero values for the median and values for the mean for missing days.
+
+Yes, we now have non-zero values for the median and values for the mean for missing days.  This plot shows:
+
+* Blue line - original mean values
+* Blue points - original median values
+* Red line - new filled in mean values for the missing days
+* Red points - new filled in median values for the missing days
 
 ```{r warning = FALSE}
 ggplot(activity_filled_by_day,  aes(x = date, y = step_mean)) +
@@ -251,43 +266,54 @@ ggplot(activity_filled_by_day,  aes(x = date, y = step_mean)) +
     geom_point(aes(y = step_median), color = "red") +
     geom_line(data = activity_by_day, aes(x = date, y = step_mean), color = "blue") +
     geom_point(data = activity_by_day, aes(y = step_median), color = "blue") +
-    labs(x = "Date of Measurement", y = "Average Number of Steps") +        # set label text
-    ggtitle("Average Number of Steps per Day with filled in missing days")  # set title
+    labs(x = "Date of Measurement", y = "Average and Median Number of Steps") +        # set label text
+    ggtitle("Average and Median Number of Steps per Day with filled in days")  # set title
 ```
 
 > What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
-Values are effected for total number of steps.
+The total number of daily steps is changed as follows:
 
+Original number of total steps:
+```{r}
+(total_daily_steps_original <- sum(activity$steps, na.rm = TRUE))
+```
+
+Number of total steps for filled in missing days:
 ```{r}
 (total_daily_steps <- sum(activity_filled$steps))
-(total_daily_steps_original <- sum(activity$steps, na.rm = TRUE))
+```
+
+Difference between the two is:
+```{r}
 (steps_added <- total_daily_steps - total_daily_steps_original)
 ```
 
-By imputing missing values, we have added `r sprintf("%7.2f", steps_added)`.
+By imputing missing values, we have added `r sprintf("%7.2f", steps_added)` steps to the total.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
 ### Requirement 1
-> Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+> Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating
+whether a given date is a weekday or weekend day.
 
-This function translates a week day date into a label indicating whether it is a week day or weekend.
+This function translates a week day name for a date into a label indicating whether it is a "weekday" or "weekend".
 ```{r}
 week_day_type <- function(date) {
     ifelse(weekdays(date) %in% c("Saturday", "Sunday"), "weekend", "weekday")
 }
 ```
 
-Set levels so that weekend plot is above weekday plot in part 2 below
+Set the factor levels so that weekend plot is above weekday plot in part 2 below
 ```{r}
 activity_filled$week_day_type <- factor( week_day_type(activity_filled$date), levels = c("weekend", "weekday") )
 kable(head(activity_filled))
 ```
 
 ### Requirement 2
-> Make a panel plot containing a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+> Make a panel plot containing a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis)
+and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
 
 
 ```{r}
