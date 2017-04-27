@@ -20,10 +20,10 @@ activity <- read_csv("activity.zip")
 
 # For this part of the assignment, you can ignore the missing values in the dataset.
 # 1. Make a histogram of the total number of steps taken each day
-ggplot(activity, aes(x = date, y = steps )) + geom_histogram(stat = "sum")
+ggplot(activity, aes(x = date, y = steps )) + geom_bar(stat = "sum")
 
 # interest only
-ggplot(activity, aes(x = date, y = steps, fill=factor(floor(interval/600)) )) + geom_histogram(stat = "sum")
+ggplot(activity, aes(x = date, y = steps, fill=factor(floor(interval/600)) )) + geom_bar(stat = "sum")
 activity_split_by_date <- split(activity, factor(activity$date))
 unlist( lapply(activity_split_by_date, function(x) { sum(x$steps) } ) ) %>% as.data.frame
 
@@ -152,7 +152,7 @@ activity_filled <- rbind(activity_na_rm, activity_na_dates) %>% arrange(date, in
 #    What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 
-ggplot(activity_filled, aes(x = date, y = steps )) + geom_histogram(stat = "sum")
+ggplot(activity_filled, aes(x = date, y = steps )) + geom_bar(stat = "sum")
 
 activity_filled_by_day <- activity_filled %>% group_by(date) %>% summarise(step_mean = mean(steps, na.rm = TRUE), step_median = median(steps, na.rm = TRUE))
 
