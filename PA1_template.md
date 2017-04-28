@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output:
+  html_document:
+    keep_md: true
+---
 
 
 
@@ -13,26 +18,6 @@ Load and attach required packages
 library(readr)     # for reading in the zipped CSV data
 library(ggplot2)   # for plotting
 library(dplyr)     # for processing data (aggregating, filtering etc)
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 library(tidyr)     # for tidying and shaping data (spread)
 library(knitr)     # for using kable to generate tables
 ```
@@ -120,7 +105,7 @@ ggplot(steps_per_day, aes(x = step_sum)) +
 ## Warning: Removed 8 rows containing non-finite values (stat_bin).
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
 ### Requirement 2
 > Calculate and report the **mean** and **median** total number of steps taken per day
@@ -146,71 +131,69 @@ kable(activity_by_day,
 
 
 
-Table: Mean and median steps per day
-
-Date          Mean number of steps   Median number of steps
------------  ---------------------  -----------------------
-2012-10-01                     NaN                       NA
-2012-10-02               0.4375000                        0
-2012-10-03              39.4166667                        0
-2012-10-04              42.0694444                        0
-2012-10-05              46.1597222                        0
-2012-10-06              53.5416667                        0
-2012-10-07              38.2465278                        0
-2012-10-08                     NaN                       NA
-2012-10-09              44.4826389                        0
-2012-10-10              34.3750000                        0
-2012-10-11              35.7777778                        0
-2012-10-12              60.3541667                        0
-2012-10-13              43.1458333                        0
-2012-10-14              52.4236111                        0
-2012-10-15              35.2048611                        0
-2012-10-16              52.3750000                        0
-2012-10-17              46.7083333                        0
-2012-10-18              34.9166667                        0
-2012-10-19              41.0729167                        0
-2012-10-20              36.0937500                        0
-2012-10-21              30.6284722                        0
-2012-10-22              46.7361111                        0
-2012-10-23              30.9652778                        0
-2012-10-24              29.0104167                        0
-2012-10-25               8.6527778                        0
-2012-10-26              23.5347222                        0
-2012-10-27              35.1354167                        0
-2012-10-28              39.7847222                        0
-2012-10-29              17.4236111                        0
-2012-10-30              34.0937500                        0
-2012-10-31              53.5208333                        0
-2012-11-01                     NaN                       NA
-2012-11-02              36.8055556                        0
-2012-11-03              36.7048611                        0
-2012-11-04                     NaN                       NA
-2012-11-05              36.2465278                        0
-2012-11-06              28.9375000                        0
-2012-11-07              44.7326389                        0
-2012-11-08              11.1770833                        0
-2012-11-09                     NaN                       NA
-2012-11-10                     NaN                       NA
-2012-11-11              43.7777778                        0
-2012-11-12              37.3784722                        0
-2012-11-13              25.4722222                        0
-2012-11-14                     NaN                       NA
-2012-11-15               0.1423611                        0
-2012-11-16              18.8923611                        0
-2012-11-17              49.7881944                        0
-2012-11-18              52.4652778                        0
-2012-11-19              30.6979167                        0
-2012-11-20              15.5277778                        0
-2012-11-21              44.3993056                        0
-2012-11-22              70.9270833                        0
-2012-11-23              73.5902778                        0
-2012-11-24              50.2708333                        0
-2012-11-25              41.0902778                        0
-2012-11-26              38.7569444                        0
-2012-11-27              47.3819444                        0
-2012-11-28              35.3576389                        0
-2012-11-29              24.4687500                        0
-2012-11-30                     NaN                       NA
+|Date       | Mean number of steps| Median number of steps|
+|:----------|--------------------:|----------------------:|
+|2012-10-01 |                  NaN|                     NA|
+|2012-10-02 |            0.4375000|                      0|
+|2012-10-03 |           39.4166667|                      0|
+|2012-10-04 |           42.0694444|                      0|
+|2012-10-05 |           46.1597222|                      0|
+|2012-10-06 |           53.5416667|                      0|
+|2012-10-07 |           38.2465278|                      0|
+|2012-10-08 |                  NaN|                     NA|
+|2012-10-09 |           44.4826389|                      0|
+|2012-10-10 |           34.3750000|                      0|
+|2012-10-11 |           35.7777778|                      0|
+|2012-10-12 |           60.3541667|                      0|
+|2012-10-13 |           43.1458333|                      0|
+|2012-10-14 |           52.4236111|                      0|
+|2012-10-15 |           35.2048611|                      0|
+|2012-10-16 |           52.3750000|                      0|
+|2012-10-17 |           46.7083333|                      0|
+|2012-10-18 |           34.9166667|                      0|
+|2012-10-19 |           41.0729167|                      0|
+|2012-10-20 |           36.0937500|                      0|
+|2012-10-21 |           30.6284722|                      0|
+|2012-10-22 |           46.7361111|                      0|
+|2012-10-23 |           30.9652778|                      0|
+|2012-10-24 |           29.0104167|                      0|
+|2012-10-25 |            8.6527778|                      0|
+|2012-10-26 |           23.5347222|                      0|
+|2012-10-27 |           35.1354167|                      0|
+|2012-10-28 |           39.7847222|                      0|
+|2012-10-29 |           17.4236111|                      0|
+|2012-10-30 |           34.0937500|                      0|
+|2012-10-31 |           53.5208333|                      0|
+|2012-11-01 |                  NaN|                     NA|
+|2012-11-02 |           36.8055556|                      0|
+|2012-11-03 |           36.7048611|                      0|
+|2012-11-04 |                  NaN|                     NA|
+|2012-11-05 |           36.2465278|                      0|
+|2012-11-06 |           28.9375000|                      0|
+|2012-11-07 |           44.7326389|                      0|
+|2012-11-08 |           11.1770833|                      0|
+|2012-11-09 |                  NaN|                     NA|
+|2012-11-10 |                  NaN|                     NA|
+|2012-11-11 |           43.7777778|                      0|
+|2012-11-12 |           37.3784722|                      0|
+|2012-11-13 |           25.4722222|                      0|
+|2012-11-14 |                  NaN|                     NA|
+|2012-11-15 |            0.1423611|                      0|
+|2012-11-16 |           18.8923611|                      0|
+|2012-11-17 |           49.7881944|                      0|
+|2012-11-18 |           52.4652778|                      0|
+|2012-11-19 |           30.6979167|                      0|
+|2012-11-20 |           15.5277778|                      0|
+|2012-11-21 |           44.3993056|                      0|
+|2012-11-22 |           70.9270833|                      0|
+|2012-11-23 |           73.5902778|                      0|
+|2012-11-24 |           50.2708333|                      0|
+|2012-11-25 |           41.0902778|                      0|
+|2012-11-26 |           38.7569444|                      0|
+|2012-11-27 |           47.3819444|                      0|
+|2012-11-28 |           35.3576389|                      0|
+|2012-11-29 |           24.4687500|                      0|
+|2012-11-30 |                  NaN|                     NA|
 
 
 ## What is the average daily activity pattern?
@@ -234,7 +217,7 @@ ggplot(activity_by_interval, aes(x = interval, y = step_mean) ) +
     ggtitle("Average Number of Steps per 5 minute Interval")   # set title
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
 ### Requirement 2
 > Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -291,13 +274,11 @@ kable(na_count, col.names = c("Number of Missing Values per Variable"), caption 
 
 
 
-Table: Number of NAs
-
-            Number of Missing Values per Variable
----------  --------------------------------------
-steps                                        2304
-date                                            0
-interval                                        0
+|         | Number of Missing Values per Variable|
+|:--------|-------------------------------------:|
+|steps    |                                  2304|
+|date     |                                     0|
+|interval |                                     0|
 
 There are 2304 missing values for the steps variable only.
 
@@ -321,18 +302,16 @@ kable(activity_na,
 
 
 
-Table: Days with missing step data
-
-Date          Number of missing intervals
------------  ----------------------------
-2012-10-01                            288
-2012-10-08                            288
-2012-11-01                            288
-2012-11-04                            288
-2012-11-09                            288
-2012-11-10                            288
-2012-11-14                            288
-2012-11-30                            288
+|Date       | Number of missing intervals|
+|:----------|---------------------------:|
+|2012-10-01 |                         288|
+|2012-10-08 |                         288|
+|2012-11-01 |                         288|
+|2012-11-04 |                         288|
+|2012-11-09 |                         288|
+|2012-11-10 |                         288|
+|2012-11-14 |                         288|
+|2012-11-30 |                         288|
 
 Are these for whole days or for part days?  How many intervals are in a day:
 
@@ -390,16 +369,14 @@ kable(head(activity_weekday_mean), caption = "Average number of steps per weekda
 
 
 
-Table: Average number of steps per weekday (first few rows)
-
- interval   Friday     Monday   Saturday     Sunday   Thursday     Tuesday   Wednesday
----------  -------  ---------  ---------  ---------  ---------  ----------  ----------
-        0        0   1.428571          0   0.000000      5.875   0.0000000       4.250
-        5        0   0.000000          0   0.000000      0.000   0.0000000       2.250
-       10        0   0.000000          0   0.000000      0.000   0.0000000       0.875
-       15        0   0.000000          0   0.000000      1.000   0.0000000       0.000
-       20        0   0.000000          0   0.000000      0.000   0.4444444       0.000
-       25        0   5.000000          0   7.428571      1.375   1.4444444       0.000
+| interval| Friday|   Monday| Saturday|   Sunday| Thursday|   Tuesday| Wednesday|
+|--------:|------:|--------:|--------:|--------:|--------:|---------:|---------:|
+|        0|      0| 1.428571|        0| 0.000000|    5.875| 0.0000000|     4.250|
+|        5|      0| 0.000000|        0| 0.000000|    0.000| 0.0000000|     2.250|
+|       10|      0| 0.000000|        0| 0.000000|    0.000| 0.0000000|     0.875|
+|       15|      0| 0.000000|        0| 0.000000|    1.000| 0.0000000|     0.000|
+|       20|      0| 0.000000|        0| 0.000000|    0.000| 0.4444444|     0.000|
+|       25|      0| 5.000000|        0| 7.428571|    1.375| 1.4444444|     0.000|
 
 3 - Now create a function to fill in the missing dates based on their week day name
 (Monday in `activity` is filled in with `Monday` from `activity_weekday_mean`.
@@ -438,16 +415,14 @@ kable(head(activity_na_dates), caption = "Data set of steps per interval for mis
 
 
 
-Table: Data set of steps per interval for missing dates (first few rows)
-
-    steps  date          interval
----------  -----------  ---------
- 1.428571  2012-10-01           0
- 0.000000  2012-10-01           5
- 0.000000  2012-10-01          10
- 0.000000  2012-10-01          15
- 0.000000  2012-10-01          20
- 5.000000  2012-10-01          25
+|    steps|date       | interval|
+|--------:|:----------|--------:|
+| 1.428571|2012-10-01 |        0|
+| 0.000000|2012-10-01 |        5|
+| 0.000000|2012-10-01 |       10|
+| 0.000000|2012-10-01 |       15|
+| 0.000000|2012-10-01 |       20|
+| 5.000000|2012-10-01 |       25|
 
 Strip out NA days from original data set and drop weekday variable
 
@@ -458,16 +433,14 @@ kable(head(activity_na_rm), caption = "Data set of activities without days which
 
 
 
-Table: Data set of activities without days which have missing dates (first few rows)
-
- steps  date          interval
-------  -----------  ---------
-     0  2012-10-02           0
-     0  2012-10-02           5
-     0  2012-10-02          10
-     0  2012-10-02          15
-     0  2012-10-02          20
-     0  2012-10-02          25
+| steps|date       | interval|
+|-----:|:----------|--------:|
+|     0|2012-10-02 |        0|
+|     0|2012-10-02 |        5|
+|     0|2012-10-02 |       10|
+|     0|2012-10-02 |       15|
+|     0|2012-10-02 |       20|
+|     0|2012-10-02 |       25|
 
 This is the rbind of the data sets above, call arrange() to sort by date and interval as per the original data set
 
@@ -478,16 +451,14 @@ kable(head(activity_filled), caption = "Original data set with missing data fill
 
 
 
-Table: Original data set with missing data filled in (first few rows)
-
-    steps  date          interval
----------  -----------  ---------
- 1.428571  2012-10-01           0
- 0.000000  2012-10-01           5
- 0.000000  2012-10-01          10
- 0.000000  2012-10-01          15
- 0.000000  2012-10-01          20
- 5.000000  2012-10-01          25
+|    steps|date       | interval|
+|--------:|:----------|--------:|
+| 1.428571|2012-10-01 |        0|
+| 0.000000|2012-10-01 |        5|
+| 0.000000|2012-10-01 |       10|
+| 0.000000|2012-10-01 |       15|
+| 0.000000|2012-10-01 |       20|
+| 5.000000|2012-10-01 |       25|
 
 
 ### Requirement 4a
@@ -504,7 +475,7 @@ ggplot(steps_per_day, aes(x = step_sum)) +
     ggtitle("Histogram of Total Steps per Day for Filled In Data") # set title
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+![plot of chunk unnamed-chunk-20](figure/unnamed-chunk-20-1.png)
 
 The graph is noticably different between 7000 and 16000.
 
@@ -529,71 +500,69 @@ kable(activity_filled_by_day,
 
 
 
-Table: Filled in Mean and median steps per day
-
-Date          Mean number of steps   Median number of steps
------------  ---------------------  -----------------------
-2012-10-01              34.6349206                 8.214286
-2012-10-02               0.4375000                 0.000000
-2012-10-03              39.4166667                 0.000000
-2012-10-04              42.0694444                 0.000000
-2012-10-05              46.1597222                 0.000000
-2012-10-06              53.5416667                 0.000000
-2012-10-07              38.2465278                 0.000000
-2012-10-08              34.6349206                 8.214286
-2012-10-09              44.4826389                 0.000000
-2012-10-10              34.3750000                 0.000000
-2012-10-11              35.7777778                 0.000000
-2012-10-12              60.3541667                 0.000000
-2012-10-13              43.1458333                 0.000000
-2012-10-14              52.4236111                 0.000000
-2012-10-15              35.2048611                 0.000000
-2012-10-16              52.3750000                 0.000000
-2012-10-17              46.7083333                 0.000000
-2012-10-18              34.9166667                 0.000000
-2012-10-19              41.0729167                 0.000000
-2012-10-20              36.0937500                 0.000000
-2012-10-21              30.6284722                 0.000000
-2012-10-22              46.7361111                 0.000000
-2012-10-23              30.9652778                 0.000000
-2012-10-24              29.0104167                 0.000000
-2012-10-25               8.6527778                 0.000000
-2012-10-26              23.5347222                 0.000000
-2012-10-27              35.1354167                 0.000000
-2012-10-28              39.7847222                 0.000000
-2012-10-29              17.4236111                 0.000000
-2012-10-30              34.0937500                 0.000000
-2012-10-31              53.5208333                 0.000000
-2012-11-01              28.5164931                 7.750000
-2012-11-02              36.8055556                 0.000000
-2012-11-03              36.7048611                 0.000000
-2012-11-04              42.6309524                23.857143
-2012-11-05              36.2465278                 0.000000
-2012-11-06              28.9375000                 0.000000
-2012-11-07              44.7326389                 0.000000
-2012-11-08              11.1770833                 0.000000
-2012-11-09              42.9156746                15.500000
-2012-11-10              43.5257937                16.428571
-2012-11-11              43.7777778                 0.000000
-2012-11-12              37.3784722                 0.000000
-2012-11-13              25.4722222                 0.000000
-2012-11-14              40.9401042                12.625000
-2012-11-15               0.1423611                 0.000000
-2012-11-16              18.8923611                 0.000000
-2012-11-17              49.7881944                 0.000000
-2012-11-18              52.4652778                 0.000000
-2012-11-19              30.6979167                 0.000000
-2012-11-20              15.5277778                 0.000000
-2012-11-21              44.3993056                 0.000000
-2012-11-22              70.9270833                 0.000000
-2012-11-23              73.5902778                 0.000000
-2012-11-24              50.2708333                 0.000000
-2012-11-25              41.0902778                 0.000000
-2012-11-26              38.7569444                 0.000000
-2012-11-27              47.3819444                 0.000000
-2012-11-28              35.3576389                 0.000000
-2012-11-29              24.4687500                 0.000000
-2012-11-30              42.9156746                15.500000
+|Date       | Mean number of steps| Median number of steps|
+|:----------|--------------------:|----------------------:|
+|2012-10-01 |           34.6349206|               8.214286|
+|2012-10-02 |            0.4375000|               0.000000|
+|2012-10-03 |           39.4166667|               0.000000|
+|2012-10-04 |           42.0694444|               0.000000|
+|2012-10-05 |           46.1597222|               0.000000|
+|2012-10-06 |           53.5416667|               0.000000|
+|2012-10-07 |           38.2465278|               0.000000|
+|2012-10-08 |           34.6349206|               8.214286|
+|2012-10-09 |           44.4826389|               0.000000|
+|2012-10-10 |           34.3750000|               0.000000|
+|2012-10-11 |           35.7777778|               0.000000|
+|2012-10-12 |           60.3541667|               0.000000|
+|2012-10-13 |           43.1458333|               0.000000|
+|2012-10-14 |           52.4236111|               0.000000|
+|2012-10-15 |           35.2048611|               0.000000|
+|2012-10-16 |           52.3750000|               0.000000|
+|2012-10-17 |           46.7083333|               0.000000|
+|2012-10-18 |           34.9166667|               0.000000|
+|2012-10-19 |           41.0729167|               0.000000|
+|2012-10-20 |           36.0937500|               0.000000|
+|2012-10-21 |           30.6284722|               0.000000|
+|2012-10-22 |           46.7361111|               0.000000|
+|2012-10-23 |           30.9652778|               0.000000|
+|2012-10-24 |           29.0104167|               0.000000|
+|2012-10-25 |            8.6527778|               0.000000|
+|2012-10-26 |           23.5347222|               0.000000|
+|2012-10-27 |           35.1354167|               0.000000|
+|2012-10-28 |           39.7847222|               0.000000|
+|2012-10-29 |           17.4236111|               0.000000|
+|2012-10-30 |           34.0937500|               0.000000|
+|2012-10-31 |           53.5208333|               0.000000|
+|2012-11-01 |           28.5164931|               7.750000|
+|2012-11-02 |           36.8055556|               0.000000|
+|2012-11-03 |           36.7048611|               0.000000|
+|2012-11-04 |           42.6309524|              23.857143|
+|2012-11-05 |           36.2465278|               0.000000|
+|2012-11-06 |           28.9375000|               0.000000|
+|2012-11-07 |           44.7326389|               0.000000|
+|2012-11-08 |           11.1770833|               0.000000|
+|2012-11-09 |           42.9156746|              15.500000|
+|2012-11-10 |           43.5257937|              16.428571|
+|2012-11-11 |           43.7777778|               0.000000|
+|2012-11-12 |           37.3784722|               0.000000|
+|2012-11-13 |           25.4722222|               0.000000|
+|2012-11-14 |           40.9401042|              12.625000|
+|2012-11-15 |            0.1423611|               0.000000|
+|2012-11-16 |           18.8923611|               0.000000|
+|2012-11-17 |           49.7881944|               0.000000|
+|2012-11-18 |           52.4652778|               0.000000|
+|2012-11-19 |           30.6979167|               0.000000|
+|2012-11-20 |           15.5277778|               0.000000|
+|2012-11-21 |           44.3993056|               0.000000|
+|2012-11-22 |           70.9270833|               0.000000|
+|2012-11-23 |           73.5902778|               0.000000|
+|2012-11-24 |           50.2708333|               0.000000|
+|2012-11-25 |           41.0902778|               0.000000|
+|2012-11-26 |           38.7569444|               0.000000|
+|2012-11-27 |           47.3819444|               0.000000|
+|2012-11-28 |           35.3576389|               0.000000|
+|2012-11-29 |           24.4687500|               0.000000|
+|2012-11-30 |           42.9156746|              15.500000|
 
 > Do these values differ from the estimates from the first part of the assignment?
 
@@ -622,7 +591,7 @@ ggplot(activity_filled_by_day,  aes(x = date, y = step_mean)) +
     ggtitle("Average and Median Number of Steps per Day with filled in days")  # set title
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
+![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23-1.png)
 
 > What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
@@ -683,14 +652,16 @@ activity_filled$week_day_type <- factor(week_day_type(activity_filled$date),
 kable(head(activity_filled))
 ```
 
-    steps  date          interval  week_day_type 
----------  -----------  ---------  --------------
- 1.428571  2012-10-01           0  weekday       
- 0.000000  2012-10-01           5  weekday       
- 0.000000  2012-10-01          10  weekday       
- 0.000000  2012-10-01          15  weekday       
- 0.000000  2012-10-01          20  weekday       
- 5.000000  2012-10-01          25  weekday       
+
+
+|    steps|date       | interval|week_day_type |
+|--------:|:----------|--------:|:-------------|
+| 1.428571|2012-10-01 |        0|weekday       |
+| 0.000000|2012-10-01 |        5|weekday       |
+| 0.000000|2012-10-01 |       10|weekday       |
+| 0.000000|2012-10-01 |       15|weekday       |
+| 0.000000|2012-10-01 |       20|weekday       |
+| 5.000000|2012-10-01 |       25|weekday       |
 
 ### Requirement 2
 > Make a panel plot containing a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis)
@@ -715,20 +686,11 @@ ggplot(activity_filled_by_interval, aes(x = interval, y = step_mean), color = "b
         ggtitle("Average Number of Steps per Weekday and Weekend")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-30-1.png)<!-- -->
+![plot of chunk unnamed-chunk-30](figure/unnamed-chunk-30-1.png)
 
 ## Notes
 
-1. The MD and HTML documents were generated using `rmarkdown::render()` since `knitr::knit2html()` gives the following error:
-
-```
-knitr::knit2html("PA1_template.Rmd")
-Error: It seems you should call rmarkdown::render() instead of knitr::knit2html() because PA1_template.Rmd appears to be an R Markdown v2 document.
-```
-
-2. Figures are stored in `PA1_template_files/figure-html/`
-
-3. See RStudio note [here](http://rmarkdown.rstudio.com/authoring_migrating_from_v1.html)
+Created using `knitr::knit2html("PA1_template.Rmd", force_v1 = TRUE)` in the following environment:
 
 
 ```r
@@ -747,15 +709,13 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] knitr_1.15.1  tidyr_0.6.0   dplyr_0.5.0   ggplot2_2.1.0 readr_1.0.0  
-## [6] rmarkdown_1.4
+## [1] tidyr_0.6.0   dplyr_0.5.0   ggplot2_2.1.0 readr_1.0.0   knitr_1.15.1 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.7      magrittr_1.5     munsell_0.4.3    colorspace_1.2-7
-##  [5] R6_2.2.0         highr_0.6        stringr_1.1.0    plyr_1.8.4      
-##  [9] tools_3.3.2      grid_3.3.2       gtable_0.2.0     DBI_0.5-1       
-## [13] htmltools_0.3.5  yaml_2.1.13      lazyeval_0.2.0   assertthat_0.1  
-## [17] rprojroot_1.2    digest_0.6.10    tibble_1.2       reshape2_1.4.1  
-## [21] evaluate_0.10    labeling_0.3     stringi_1.1.2    scales_0.4.0    
-## [25] backports_1.0.5
+##  [1] Rcpp_0.12.7      digest_0.6.10    assertthat_0.1   mime_0.5        
+##  [5] R6_2.2.0         grid_3.3.2       plyr_1.8.4       DBI_0.5-1       
+##  [9] gtable_0.2.0     magrittr_1.5     evaluate_0.10    scales_0.4.0    
+## [13] highr_0.6        stringi_1.1.2    reshape2_1.4.1   lazyeval_0.2.0  
+## [17] labeling_0.3     tools_3.3.2      stringr_1.1.0    markdown_0.8    
+## [21] munsell_0.4.3    colorspace_1.2-7 tibble_1.2
 ```

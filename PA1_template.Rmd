@@ -357,16 +357,7 @@ ggplot(activity_filled_by_interval, aes(x = interval, y = step_mean), color = "b
 
 ## Notes
 
-1. The MD and HTML documents were generated using `rmarkdown::render()` since `knitr::knit2html()` gives the following error:
-
-```
-knitr::knit2html("PA1_template.Rmd")
-Error: It seems you should call rmarkdown::render() instead of knitr::knit2html() because PA1_template.Rmd appears to be an R Markdown v2 document.
-```
-
-2. Figures are stored in `PA1_template_files/figure-html/`
-
-3. See RStudio note [here](http://rmarkdown.rstudio.com/authoring_migrating_from_v1.html)
+Created using `knitr::knit2html("PA1_template.Rmd", force_v1 = TRUE)` in the following environment:
 
 ```{r}
 sessionInfo()
