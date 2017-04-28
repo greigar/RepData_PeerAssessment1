@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 > Load the data (i.e. `read.csv()`)
 
 Load and attach required packages
-```{r}
+```{r warning=FALSE}
 library(readr)     # for reading in the zipped CSV data
 library(ggplot2)   # for plotting
 library(dplyr)     # for processing data (aggregating, filtering etc)
@@ -48,11 +48,11 @@ Therefore, no further processing is required since `readr::read_csv()` correctly
 Note that we want a *histogram* not a bar chart.
 
 Create a data set with the total number of steps per day.
-```{r warning=FALSE}
+```{r}
 steps_per_day <- activity %>% group_by(date) %>% summarise(step_sum = sum(steps)) %>% select(step_sum)
 
 ggplot(steps_per_day, aes(x = step_sum)) +
-    geom_histogram() +
+    geom_histogram(bins=30) +
     labs(x = "Count", y = "Total Steps") +      # set label text
     ggtitle("Histogram of Total Steps per Day") # set title
 ```
@@ -237,11 +237,11 @@ kable(head(activity_filled), caption = "Original data set with missing data fill
 > Make a histogram of the total number of steps taken each day
 
 
-```{r warning = FALSE}
+```{r}
 steps_per_day <- activity_filled %>% group_by(date) %>% summarise(step_sum = sum(steps)) %>% select(step_sum)
 
 ggplot(steps_per_day, aes(x = step_sum)) +
-    geom_histogram() +
+    geom_histogram(bins=30) +
     labs(x = "Count", y = "Total Steps") +      # set label text
     ggtitle("Histogram of Total Steps per Day for Filled In Data") # set title
 ```
@@ -355,3 +355,19 @@ ggplot(activity_filled_by_interval, aes(x = interval, y = step_mean), color = "b
         ggtitle("Average Number of Steps per Weekday and Weekend")
 ```
 
+## Notes
+
+1. The MD and HTML documents were generated using `rmarkdown::render()` since `knitr::knit2html()` gives the following error:
+
+```
+knitr::knit2html("PA1_template.Rmd")
+Error: It seems you should call rmarkdown::render() instead of knitr::knit2html() because PA1_template.Rmd appears to be an R Markdown v2 document.
+```
+
+2. Figures are stored in `PA1_template_files/figure-html/`
+
+3. See RStudio note [here](http://rmarkdown.rstudio.com/authoring_migrating_from_v1.html)
+
+```{r}
+sessionInfo()
+```
